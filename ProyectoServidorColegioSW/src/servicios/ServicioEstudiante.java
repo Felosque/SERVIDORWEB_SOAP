@@ -10,6 +10,8 @@ import java.util.logging.Logger;
 
 public class ServicioEstudiante{
     
+    private static Conexion con = Conexion.getInstance();
+    
     public ServicioEstudiante() {
         
     }
@@ -19,7 +21,7 @@ public class ServicioEstudiante{
 "	VALUES ('"+pEstudiante.getDocumentoIdentificacion()+"', '"+pEstudiante.getNombres()+"', '"+pEstudiante.getApellidos()+"', "
                 + "'"+ pEstudiante.getFechaNacimiento().toString()+"', "+pEstudiante.getGenero()+", '"+pEstudiante.getEps()+"',"
                 + " '"+pEstudiante.getTelefono()+"', '"+pEstudiante.getDireccion()+"', '"+pEstudiante.getCorreo()+"', 1);";
-        boolean res = Conexion.getInstance().executeQuery(consulta);
+        boolean res = con.executeQuery(consulta);
         if(!res){
             throw new Exception("Hay un error al insertar la persona la base de datos.");
         }
@@ -27,7 +29,7 @@ public class ServicioEstudiante{
     
     public static boolean eliminarEstudiante(String pDocumento) throws Exception{
         String consulta = "UPDATE public.estudiantes SET estado=0 WHERE documento = '"+ pDocumento +"';";
-        boolean res = Conexion.getInstance().executeQuery(consulta);
+        boolean res = con.executeQuery(consulta);
         return res;
     }
     
@@ -39,13 +41,13 @@ public class ServicioEstudiante{
             "eps='"+ pEstudiante.getEps() +"', telefono='" + pEstudiante.getTelefono() +"', " +
             "direccion='"+ pEstudiante.getDireccion() + "', correo='"+ pEstudiante.getCorreo()+"'" +
 "	WHERE documento = '"+pEstudiante.getDocumentoIdentificacion()+ "';";
-        boolean res = Conexion.getInstance().executeQuery(consulta);
+        boolean res = con.executeQuery(consulta);
         return res;
     }
     
     public static Estudiante buscarEstudiante(String pDocumento) throws Exception {
         String consulta = "SELECT * FROM public.estudiantes where documento = '" + pDocumento +"' and estado = 1;";
-        ResultSet rs = Conexion.getInstance().getQuery(consulta);
+        ResultSet rs = con.getQuery(consulta);
         if(rs != null){
             Estudiante estudiante = resultSetToEstudiante(rs);
             return estudiante;
@@ -56,7 +58,7 @@ public class ServicioEstudiante{
     
     public static ArrayList<Estudiante> darEstudiantes() throws Exception {
         String consulta = "SELECT * FROM public.estudiantes where estado = 1 ORDER BY documento ASC;";
-        ResultSet rs = Conexion.getInstance().getQuery(consulta);
+        ResultSet rs = con.getQuery(consulta);
         if(rs != null){
             ArrayList<Estudiante> estudiantes = resultSetToArrayList(rs);
             return estudiantes;
@@ -70,7 +72,7 @@ public class ServicioEstudiante{
         int[] cantEstu = new int[2];
         cantEstu[0] = 0; cantEstu[1] = 0;
         String consulta = "SELECT genero, count(genero) FROM public.estudiantes where estado = 1 group by genero having count(genero) > 0 ORDER BY genero ASC;";
-        ResultSet rs = Conexion.getInstance().getQuery(consulta);
+        ResultSet rs = con.getQuery(consulta);
         try {
             int i = 0;
             while (rs.next()) {
@@ -84,7 +86,7 @@ public class ServicioEstudiante{
     
     public static ArrayList<Estudiante> darEstudiantesPorNombre(String pNombre) throws Exception {
         String consulta = "SELECT * FROM estudiantes WHERE nombres LIKE '%"+pNombre+"%' AND estado = 1;";
-        ResultSet rs = Conexion.getInstance().getQuery(consulta);
+        ResultSet rs = con.getQuery(consulta);
         if(rs != null){
             ArrayList<Estudiante> estudiantes = resultSetToArrayList(rs);
             return estudiantes;
@@ -103,7 +105,7 @@ public class ServicioEstudiante{
                                 "AND estudiantes.estado = 1" +
                                 "ORDER BY materias.grado DESC" +
                                 "LIMIT 1;";
-            ResultSet rs = Conexion.getInstance().getQuery(consulta);
+            ResultSet rs = con.getQuery(consulta);
             while(rs.next()){
                 return rs.getInt(1);
             }
@@ -139,6 +141,4 @@ public class ServicioEstudiante{
         return null;
     }
 
-    
-    
 }
