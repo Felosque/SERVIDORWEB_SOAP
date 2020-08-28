@@ -1,5 +1,7 @@
 package constantes;
 
+import java.text.SimpleDateFormat;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.regex.Matcher;
@@ -67,6 +69,12 @@ public class UtilitiesFunctions {
         }else{
             return false;
         }
+    }
+    
+    public static String fechaSQL(Date pFecha){
+        SimpleDateFormat dformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String currentTime = dformat.format(pFecha);
+        return currentTime;
     }
     
 }

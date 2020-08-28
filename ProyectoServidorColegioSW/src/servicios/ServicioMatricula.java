@@ -16,7 +16,7 @@ public class ServicioMatricula {
     }
 
     public static void matricularEstudiante(Matricula pMatricula) throws Exception {
-        String consulta = "INSERT INTO public.matriculas(pkestudiante, pkmateria, fecha_inscripcion, fecha_inicio, fecha_final, nota_definitiva, estado)" +
+        String consulta = "INSERT INTO matriculas(pkestudiante, pkmateria, fecha_inscripcion, fecha_inicio, fecha_final, nota_definitiva, estado)" +
                         " VALUES ( "+pMatricula.getPkEstudiante()+", "+pMatricula.getPkMateria()+", '"+pMatricula.getFechaInscripcion().toString()+"',"
                 + " '"+pMatricula.getFechaInicio().toString()+"', '"+pMatricula.getFechaFinal().toString()+"', "+pMatricula.getNotaDefinitiva()+", "+pMatricula.getEstado()+");";
         boolean res = Conexion.getInstance().executeQuery(consulta);
@@ -26,14 +26,14 @@ public class ServicioMatricula {
     }
 
     public static ArrayList<Matricula> darMatriculasEstudiante(String pDocumento) throws Exception {
-        String consulta = "SELECT * FROM public.matriculas where pkestudiante = '"+ pDocumento +"';";
+        String consulta = "SELECT * FROM matriculas where pkestudiante = '"+ pDocumento +"';";
         ResultSet rs = Conexion.getInstance().getQuery(consulta);
         ArrayList<Matricula> matriculasEncontradas = resultSetToArrayList(rs);
         return matriculasEncontradas;
     }
 
     public static ArrayList<Matricula> darMatriculas() throws Exception {
-        String consulta = "SELECT * FROM public.matriculas;";
+        String consulta = "SELECT * FROM matriculas;";
         ResultSet rs = Conexion.getInstance().getQuery(consulta);
         ArrayList<Matricula> matriculasEncontradas = resultSetToArrayList(rs);
         return matriculasEncontradas;
@@ -68,7 +68,7 @@ public class ServicioMatricula {
     }
 
     public static void actualizarMatricula(Matricula pMatricula) throws Exception {
-        String consulta = "UPDATE public.matriculas " +
+        String consulta = "UPDATE matriculas " +
                 "SET pkestudiante='"+pMatricula.getPkEstudiante()+"', pkmateria="+pMatricula.getPkMateria()+", "
                 + "fecha_inscripcion='"+pMatricula.getFechaInscripcion().toString()+"', fecha_inicio='"+pMatricula.getFechaInicio().toString()+"', "
                 + "fecha_final='"+pMatricula.getFechaFinal().toString()+"', nota_definitiva="+pMatricula.getNotaDefinitiva()+", estado="+pMatricula.getEstado()+" " +

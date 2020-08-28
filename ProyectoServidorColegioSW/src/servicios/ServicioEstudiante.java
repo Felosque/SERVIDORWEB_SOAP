@@ -4,12 +4,10 @@ import conexion.Conexion;
 import estructural.Estudiante;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import java.text.SimpleDateFormat;
-
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import constantes.UtilitiesFunctions.*;
 
 public class ServicioEstudiante{
     
@@ -20,12 +18,10 @@ public class ServicioEstudiante{
     }
 
     public static void insertarEstudiante(Estudiante pEstudiante) throws Exception {
-        SimpleDateFormat dformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String currentTime = dformat.format(pEstudiante.getFechaNacimiento());
-        
+
         String consulta = "INSERT INTO estudiantes (documento, nombres, apellidos, fecha_nacimiento, genero, eps, telefono, direccion, correo, estado)" +
 "	VALUES ('"+pEstudiante.getDocumentoIdentificacion()+"', '"+pEstudiante.getNombres()+"', '"+pEstudiante.getApellidos()+"', "
-                + "'"+ currentTime+"', "+pEstudiante.getGenero()+", '"+pEstudiante.getEps()+"',"
+                + "'"+ fechaSQL(pEstudiante.getFechaNacimiento()) +"', "+pEstudiante.getGenero()+", '"+pEstudiante.getEps()+"',"
                 + " '"+pEstudiante.getTelefono()+"', '"+pEstudiante.getDireccion()+"', '"+pEstudiante.getCorreo()+"', 1);";
         boolean res = con.executeQuery(consulta);
         if(!res){
