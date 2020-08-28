@@ -1,6 +1,9 @@
 package servicios;
 
 import conexion.Conexion;
+
+import constantes.UtilitiesFunctions;
+
 import estructural.Estudiante;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,10 +21,9 @@ public class ServicioEstudiante{
     }
 
     public static void insertarEstudiante(Estudiante pEstudiante) throws Exception {
-
         String consulta = "INSERT INTO estudiantes (documento, nombres, apellidos, fecha_nacimiento, genero, eps, telefono, direccion, correo, estado)" +
 "	VALUES ('"+pEstudiante.getDocumentoIdentificacion()+"', '"+pEstudiante.getNombres()+"', '"+pEstudiante.getApellidos()+"', "
-                + "'"+ fechaSQL(pEstudiante.getFechaNacimiento()) +"', "+pEstudiante.getGenero()+", '"+pEstudiante.getEps()+"',"
+                + "'"+ UtilitiesFunctions.fechaSQL(pEstudiante.getFechaNacimiento()) +"', "+pEstudiante.getGenero()+", '"+pEstudiante.getEps()+"',"
                 + " '"+pEstudiante.getTelefono()+"', '"+pEstudiante.getDireccion()+"', '"+pEstudiante.getCorreo()+"', 1);";
         boolean res = con.executeQuery(consulta);
         if(!res){
@@ -39,7 +41,7 @@ public class ServicioEstudiante{
     {
         String consulta = "UPDATE estudiantes\n" +
 "	SET nombres='"+ pEstudiante.getNombres() +"', apellidos='"+ pEstudiante.getApellidos() +"', " +
-            "fecha_nacimiento='"+pEstudiante.getFechaNacimiento().toString()+"', genero="+ pEstudiante.getGenero() +", " +
+            "fecha_nacimiento='"+UtilitiesFunctions.fechaSQL(pEstudiante.getFechaNacimiento())+"', genero="+ pEstudiante.getGenero() +", " +
             "eps='"+ pEstudiante.getEps() +"', telefono='" + pEstudiante.getTelefono() +"', " +
             "direccion='"+ pEstudiante.getDireccion() + "', correo='"+ pEstudiante.getCorreo()+"'" +
 "	WHERE documento = '"+pEstudiante.getDocumentoIdentificacion()+ "';";

@@ -1,6 +1,9 @@
 package servicios;
 
 import conexion.Conexion;
+
+import constantes.UtilitiesFunctions;
+
 import estructural.Matricula;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,8 +20,8 @@ public class ServicioMatricula {
 
     public static void matricularEstudiante(Matricula pMatricula) throws Exception {
         String consulta = "INSERT INTO matriculas(pkestudiante, pkmateria, fecha_inscripcion, fecha_inicio, fecha_final, nota_definitiva, estado)" +
-                        " VALUES ( "+pMatricula.getPkEstudiante()+", "+pMatricula.getPkMateria()+", '"+pMatricula.getFechaInscripcion().toString()+"',"
-                + " '"+pMatricula.getFechaInicio().toString()+"', '"+pMatricula.getFechaFinal().toString()+"', "+pMatricula.getNotaDefinitiva()+", "+pMatricula.getEstado()+");";
+                        " VALUES ( "+pMatricula.getPkEstudiante()+", "+pMatricula.getPkMateria()+", '"+UtilitiesFunctions.fechaSQL(pMatricula.getFechaInscripcion())+"',"
+                + " '"+UtilitiesFunctions.fechaSQL(pMatricula.getFechaInicio())+"', '"+UtilitiesFunctions.fechaSQL(pMatricula.getFechaFinal())+"', "+pMatricula.getNotaDefinitiva()+", "+pMatricula.getEstado()+");";
         boolean res = Conexion.getInstance().executeQuery(consulta);
         if(res == false){
             throw new Exception("No se ha podido matricular al estudiante en la asignatura de codigo: " + pMatricula.getPkMateria());
@@ -70,8 +73,8 @@ public class ServicioMatricula {
     public static void actualizarMatricula(Matricula pMatricula) throws Exception {
         String consulta = "UPDATE matriculas " +
                 "SET pkestudiante='"+pMatricula.getPkEstudiante()+"', pkmateria="+pMatricula.getPkMateria()+", "
-                + "fecha_inscripcion='"+pMatricula.getFechaInscripcion().toString()+"', fecha_inicio='"+pMatricula.getFechaInicio().toString()+"', "
-                + "fecha_final='"+pMatricula.getFechaFinal().toString()+"', nota_definitiva="+pMatricula.getNotaDefinitiva()+", estado="+pMatricula.getEstado()+" " +
+                + "fecha_inscripcion='"+UtilitiesFunctions.fechaSQL(pMatricula.getFechaInscripcion())+"', fecha_inicio='"+UtilitiesFunctions.fechaSQL(pMatricula.getFechaInicio())+"', "
+                + "fecha_final='"+UtilitiesFunctions.fechaSQL(pMatricula.getFechaFinal())+"', nota_definitiva="+pMatricula.getNotaDefinitiva()+", estado="+pMatricula.getEstado()+" " +
                 "WHERE codigo = "+pMatricula.getCodigo()+";";
         boolean res = Conexion.getInstance().executeQuery(consulta);
     }
