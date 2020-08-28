@@ -4,6 +4,9 @@ import conexion.Conexion;
 import estructural.Estudiante;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,9 +20,12 @@ public class ServicioEstudiante{
     }
 
     public static void insertarEstudiante(Estudiante pEstudiante) throws Exception {
-        String consulta = "INSERT INTO public.estudiantes (documento, nombres, apellidos, fecha_nacimiento, genero, eps, telefono, direccion, correo, estado)" +
+        SimpleDateFormat dformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String currentTime = dformat.format(pEstudiante.getFechaNacimiento());
+        
+        String consulta = "INSERT INTO estudiantes (documento, nombres, apellidos, fecha_nacimiento, genero, eps, telefono, direccion, correo, estado)" +
 "	VALUES ('"+pEstudiante.getDocumentoIdentificacion()+"', '"+pEstudiante.getNombres()+"', '"+pEstudiante.getApellidos()+"', "
-                + "'"+ pEstudiante.getFechaNacimiento().toString()+"', "+pEstudiante.getGenero()+", '"+pEstudiante.getEps()+"',"
+                + "'"+ currentTime+"', "+pEstudiante.getGenero()+", '"+pEstudiante.getEps()+"',"
                 + " '"+pEstudiante.getTelefono()+"', '"+pEstudiante.getDireccion()+"', '"+pEstudiante.getCorreo()+"', 1);";
         boolean res = con.executeQuery(consulta);
         if(!res){
@@ -28,14 +34,14 @@ public class ServicioEstudiante{
     }
     
     public static boolean eliminarEstudiante(String pDocumento) throws Exception{
-        String consulta = "UPDATE public.estudiantes SET estado=0 WHERE documento = '"+ pDocumento +"';";
+        String consulta = "UPDATE estudiantes SET estado=0 WHERE documento = '"+ pDocumento +"';";
         boolean res = con.executeQuery(consulta);
         return res;
     }
     
     public static boolean actualizarEstudiante(String pDocumento, Estudiante pEstudiante) throws Exception
     {
-        String consulta = "UPDATE public.estudiantes\n" +
+        String consulta = "UPDATE estudiantes\n" +
 "	SET nombres='"+ pEstudiante.getNombres() +"', apellidos='"+ pEstudiante.getApellidos() +"', " +
             "fecha_nacimiento='"+pEstudiante.getFechaNacimiento().toString()+"', genero="+ pEstudiante.getGenero() +", " +
             "eps='"+ pEstudiante.getEps() +"', telefono='" + pEstudiante.getTelefono() +"', " +
@@ -46,7 +52,7 @@ public class ServicioEstudiante{
     }
     
     public static Estudiante buscarEstudiante(String pDocumento) throws Exception {
-        String consulta = "SELECT * FROM public.estudiantes where documento = '" + pDocumento +"' and estado = 1;";
+        String consulta = "SELECT * FROM estudiantes where documento = '" + pDocumento +"' and estado = 1;";
         ResultSet rs = con.getQuery(consulta);
         if(rs != null){
             Estudiante estudiante = resultSetToEstudiante(rs);
@@ -57,7 +63,7 @@ public class ServicioEstudiante{
     }
     
     public static ArrayList<Estudiante> darEstudiantes() throws Exception {
-        String consulta = "SELECT * FROM public.estudiantes where estado = 1 ORDER BY documento ASC;";
+        String consulta = "SELECT * FROM estudiantes where estado = 1 ORDER BY documento ASC;";
         ResultSet rs = con.getQuery(consulta);
         if(rs != null){
             ArrayList<Estudiante> estudiantes = resultSetToArrayList(rs);
@@ -71,7 +77,7 @@ public class ServicioEstudiante{
     public static int[] cantidadEstudiantesPorGenero() throws Exception {
         int[] cantEstu = new int[2];
         cantEstu[0] = 0; cantEstu[1] = 0;
-        String consulta = "SELECT genero, count(genero) FROM public.estudiantes where estado = 1 group by genero having count(genero) > 0 ORDER BY genero ASC;";
+        String consulta = "SELECT genero, count(genero) FROM estudiantes where estado = 1 group by genero having count(genero) > 0 ORDER BY genero ASC;";
         ResultSet rs = con.getQuery(consulta);
         try {
             int i = 0;

@@ -17,7 +17,7 @@ public class Conexion {
     {
         try {
             System.out.println("Realizando conexión a la base de datos");
-            con = DriverManager.getConnection("jdbc:postgresql://51.79.74.228:5432/SOA", "root", "9uRfDS7vTEdE");
+            con = DriverManager.getConnection("jdbc:mysql://localhost/soa", "root", "");
             System.out.println("Conexión realizada con exito.");
         }
         catch (Exception e) { }
@@ -48,6 +48,7 @@ public class Conexion {
             st.execute(query);
             return true;
         } catch (SQLException e) {
+            e.printStackTrace();
             System.out.println(e.getSQLState());
             return false;
         } 
