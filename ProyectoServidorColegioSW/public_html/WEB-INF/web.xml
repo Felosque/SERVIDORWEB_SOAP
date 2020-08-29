@@ -17,6 +17,11 @@
     <servlet-class>serviciosWeb.ServicioMatriculaSW</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
+  <servlet>
+    <servlet-name>ServiciosExtraSWPort</servlet-name>
+    <servlet-class>serviciosWeb.ServiciosExtraSW</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
   <servlet-mapping>
     <servlet-name>ServicioEstudianteSWPort</servlet-name>
     <url-pattern>/ServicioEstudianteSWPort</url-pattern>
@@ -28,5 +33,9 @@
   <servlet-mapping>
     <servlet-name>ServicioMatriculaSWPort</servlet-name>
     <url-pattern>/ServicioMatriculaSWPort</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ServiciosExtraSWPort</servlet-name>
+    <url-pattern>/ServiciosExtraSWPort</url-pattern>
   </servlet-mapping>
 </web-app>
