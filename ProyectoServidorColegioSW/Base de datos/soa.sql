@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-08-2020 a las 04:47:22
+-- Tiempo de generación: 29-08-2020 a las 22:04:15
 -- Versión del servidor: 10.1.33-MariaDB
 -- Versión de PHP: 7.2.6
 
@@ -40,6 +40,17 @@ CREATE TABLE `estudiantes` (
   `correo` varchar(150) DEFAULT NULL,
   `estado` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `estudiantes`
+--
+
+INSERT INTO `estudiantes` (`documento`, `nombres`, `apellidos`, `fecha_nacimiento`, `genero`, `eps`, `telefono`, `direccion`, `correo`, `estado`) VALUES
+('111', 'Fabian', 'Lozano', '2010-08-10', 0, 'Salud Total', '29932342', 'Calle 90° Barrio Francisco', 'fabian.lozano@gmail.com', 1),
+('222', 'Angela', 'Cuella', '2009-08-20', 1, 'Salud General', '20003231', 'Santa Marta del vació 222', 'angela.cuella@gmail.com', 1),
+('333', 'Felipe', 'Lozano', '2007-08-25', 0, 'Salud Cop', '3001231231', 'Calle 12 Villa del rio', 'felipe.lozano@gmail.com', 1),
+('444', 'Fernando', 'Cabello', '2005-08-26', 0, 'Sulitas', '3032132312', 'Falcon N¬ 3123', 'fernando.cabello@gmail.com', 1),
+('555', 'Paola', 'Diaz', '2007-08-11', 1, 'Sulitas', '29993231', 'Costumer N° 32-321', 'paola.diaz@gmail.com', 1);
 
 -- --------------------------------------------------------
 
@@ -189,7 +200,7 @@ ALTER TABLE `materias`
 -- AUTO_INCREMENT de la tabla `matriculas`
 --
 ALTER TABLE `matriculas`
-  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Restricciones para tablas volcadas
@@ -200,7 +211,7 @@ ALTER TABLE `matriculas`
 --
 ALTER TABLE `matriculas`
   ADD CONSTRAINT `FKMATRICULAS256091` FOREIGN KEY (`pkMateria`) REFERENCES `materias` (`codigo`),
-  ADD CONSTRAINT `FKMATRICULAS767366` FOREIGN KEY (`pkestudiante`) REFERENCES `estudiantes` (`documento`);
+  ADD CONSTRAINT `FKMATRICULAS767366` FOREIGN KEY (`pkestudiante`) REFERENCES `estudiantes` (`documento`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

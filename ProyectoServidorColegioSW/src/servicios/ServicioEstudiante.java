@@ -32,7 +32,7 @@ public class ServicioEstudiante{
     }
     
     public static boolean eliminarEstudiante(String pDocumento) throws Exception{
-        String consulta = "UPDATE estudiantes SET estado=0 WHERE documento = '"+ pDocumento +"';";
+        String consulta = "DELETE FROM estudiantes WHERE documento = '"+ pDocumento +"';";
         boolean res = con.executeQuery(consulta);
         return res;
     }
